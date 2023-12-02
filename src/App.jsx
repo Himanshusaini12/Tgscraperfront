@@ -22,27 +22,19 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* <div className="search-container">
+      <div className="search-container">
         <input
           type="text"
           placeholder="Search for content..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-      </div> */}
+      </div>
 
-      <div class="searchBox">
-
-<input class="searchInput"type="text" name="" placeholder="Search" onChange={(e) => setSearchTerm(e.target.value)} value={searchTerm}/>
-<button class="searchButton" href="#">
-    <i class="material-icons">
-        search
-    </i>
-</button>
-</div>
+      
       
       <div className="messages-container">
-        <h2> ----------</h2>
+        <h2>Telegram Messages</h2>
         <ul className="message-list">
           {searchTerm !== '' ? (
             messages.map(message => (
