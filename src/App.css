@@ -19,6 +19,7 @@ body {
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
 }
 
 /* Search container styles */
@@ -27,11 +28,12 @@ body {
 }
 
 input[type="text"] {
-  width: 100%;
+  width: 80%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  margin-left: 10%;
 }
 
 /* Messages container styles */
