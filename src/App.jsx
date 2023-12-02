@@ -38,14 +38,14 @@ function App() {
         <ul className="message-list">
           {searchTerm !== '' ? (
             messages.map(message => (
-              <li key={message._id}>
-                <strong>Content:</strong> {message.content}
+              <li key={message._id} className='message-card'>
+                 {message.content .replace(/{|}/g, '') .replace(/🔹 t.me\/breachdetector 🔹/g, '').replace(/['"]+/g, '').replace(/,/g, "    ||       ").trim()}
               </li>
             ))
           ) : (
             originalMessages.map(message => (
-              <li key={message._id}>
-                <strong>Content:</strong> {message.content}
+              <li key={message._id} className= 'message-card'>
+      {message.content .replace(/{|}/g, '') .replace(/🔹 t.me\/breachdetector 🔹/g, '').replace(/['"]+/g, '').replace(/,/g, " ||    ").trim()}
               </li>
             ))
           )}
