@@ -1,38 +1,73 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-.message-card {
-  background: #d41414; 
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px; 
-  border-radius: 20px;
-  
+/* Reset some default styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.card-header,
-.card-footer {
-  display: flex;
-  justify-content: space-between; 
+/* Body styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+  color: #333; /* Set text color */
 }
-.search-container {
+
+/* App container styles */
+.app-container {
+  max-width: 800px;
+  margin: 20px auto;
   padding: 20px;
-  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.search-container input[type="text"] {
-  width: 50%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box; 
-  border: 2px solid #555;
-  border-radius: 4px;
+/* Search container styles */
+.search-container {
+  margin-bottom: 20px;
 }
 
-.search-container input[type="text"]:focus {
-  border-color: #ccc;
-  outline: none;  
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Messages container styles */
+.messages-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+h2 {
+  color: #333;
+}
+
+.message-list {
+  list-style: none;
+  padding: 0;
+}
+
+.message-card {
+  background-color: #fff;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Responsive styles */
+@media only screen and (max-width: 600px) {
+  .app-container {
+    padding: 10px;
+  }
+
+  input[type="text"] {
+    font-size: 14px;
+  }
+
+  .message-card {
+    padding: 8px;
+  }
 }
