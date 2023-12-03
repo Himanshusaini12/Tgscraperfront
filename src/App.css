@@ -74,3 +74,26 @@ h2 {
     padding: 8px;
   }
 }
+.suggested-tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;  
+  margin-left: 10%;
+}
+
+.tag {
+  background-color: #eee;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.tag:hover {
+  background-color: #ddd;  
+}
+
+ 

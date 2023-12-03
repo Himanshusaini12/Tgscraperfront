@@ -7,6 +7,7 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [originalMessages, setOriginalMessages] = useState([]);
+  const [suggestedTags, setSuggestedTags] = useState(['India', 'Government', 'Database']); // Add your suggested tags here
 
   useEffect(() => {
     axios.get('https://tgscraper.onrender.com/msg')
@@ -20,6 +21,10 @@ function App() {
       .catch(error => console.error('Error fetching data:', error));
   }, [searchTerm]);
 
+  const handleTagClick = (tag) => {
+    setSearchTerm(tag);
+  };
+
   return (
     <div className="app-container">
       <div className="search-container">
@@ -29,23 +34,28 @@ function App() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <div className="suggested-tags">
+          {suggestedTags.map((tag, index) => (
+            <span key={index} className="tag" onClick={() => handleTagClick(tag)}>
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
 
-      
-      
       <div className="messages-container">
         <h2>Telegram Messages</h2>
         <ul className="message-list">
           {searchTerm !== '' ? (
             messages.map(message => (
               <li key={message._id} className='message-card'>
-                 {message.content .replace(/{|}/g, '') .replace(/🔹 t.me\/breachdetector 🔹/g, '').replace(/['"]+/g, '').replace(/,/g, "    ||       ").trim()}
+                {message.content.replace(/{|}/g, '').replace(/🔹 t.me\/breachdetector 🔹/g, '').replace(/['"]+/g, '').replace(/,/g, "    ||       ").trim()}
               </li>
             ))
           ) : (
             originalMessages.map(message => (
-              <li key={message._id} className= 'message-card'>
-      {message.content .replace(/{|}/g, '') .replace(/🔹 t.me\/breachdetector 🔹/g, '').replace(/['"]+/g, '').replace(/,/g, " ||    ").trim()}
+              <li key={message._id} className='message-card'>
+                {message.content.replace(/{|}/g, '').replace(/🔹 t.me\/breachdetector 🔹/g, '').replace(/['"]+/g, '').replace(/,/g, " ||    ").trim()}
               </li>
             ))
           )}
