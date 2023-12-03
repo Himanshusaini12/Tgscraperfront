@@ -7,7 +7,9 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [originalMessages, setOriginalMessages] = useState([]);
-  const [suggestedTags, setSuggestedTags] = useState(['India', 'Government', 'Database']); // Add your suggested tags here
+  const [suggestedTags, setSuggestedTags] = useState(['India', 'Government', 'Database']);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 100; // Adjust this based on your needs
 
   useEffect(() => {
     axios.get('https://tgscraper.onrender.com/msg')
@@ -24,6 +26,11 @@ function App() {
   const handleTagClick = (tag) => {
     setSearchTerm(tag);
   };
+
+  const messagesToDisplay = searchTerm !== '' ? messages : originalMessages;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const messagesSlice = messagesToDisplay.slice(startIndex, endIndex);
 
   return (
     <div className="app-container">
@@ -46,20 +53,21 @@ function App() {
       <div className="messages-container">
         <h2>Telegram Messages</h2>
         <ul className="message-list">
-          {searchTerm !== '' ? (
-            messages.map(message => (
-              <li key={message._id} className='message-card'>
-                {message.content.replace(/{|}/g, '').replace(/🔹 t.me\/breachdetector 🔹/g, '').replace(/['"]+/g, '').replace(/,/g, "    ||       ").trim()}
-              </li>
-            ))
-          ) : (
-            originalMessages.map(message => (
-              <li key={message._id} className='message-card'>
-                {message.content.replace(/{|}/g, '').replace(/🔹 t.me\/breachdetector 🔹/g, '').replace(/['"]+/g, '').replace(/,/g, " ||    ").trim()}
-              </li>
-            ))
-          )}
+          {messagesSlice.map(message => (
+            <li key={message._id} className='message-card'>
+              {message.content.replace(/{|}/g, '').replace(/🔹 t.me\/breachdetector 🔹/g, '').replace(/['"]+/g, '').replace(/,/g, "    ||       ").trim()}
+            </li>
+          ))}
         </ul>
+        {messagesToDisplay.length > itemsPerPage && (
+          <div className="pagination">
+            {Array.from({ length: Math.ceil(messagesToDisplay.length / itemsPerPage) }, (_, index) => (
+              <button key={index + 1} onClick={() => setCurrentPage(index + 1)}>
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
