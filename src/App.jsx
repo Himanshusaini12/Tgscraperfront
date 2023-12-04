@@ -9,13 +9,13 @@ function App() {
   const [originalMessages, setOriginalMessages] = useState([]);
   const [suggestedTags, setSuggestedTags] = useState(['India', 'Government', 'Database']);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 100; // Adjust this based on your needs
+  const itemsPerPage = 1000; // Adjust this based on your needs
 
   useEffect(() => {
     axios.get('https://tgscraper.onrender.com/msg')
       .then(response => {
         setOriginalMessages(response.data);
-        const filteredMessages = response.data.filter(message =>
+        const filteredMessages = originalMessages.filter(message =>
           message.content.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setMessages(filteredMessages);
