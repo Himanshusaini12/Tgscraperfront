@@ -61,11 +61,13 @@ function App() {
         </ul>
         {messagesToDisplay.length > itemsPerPage && (
           <div className="pagination">
-            {Array.from({ length: Math.ceil(messagesToDisplay.length / itemsPerPage) }, (_, index) => (
-              <button key={index + 1} onClick={() => setCurrentPage(index + 1)}>
-                {index + 1}
-              </button>
-            ))}
+            {/* First page button */}
+            <button onClick={() => setCurrentPage(1)}>1</button>
+
+            {/* Last page button */}
+            {totalPages > 1 && (
+              <button onClick={() => setCurrentPage(totalPages)}>{totalPages}</button>
+            )}
           </div>
         )}
       </div>
