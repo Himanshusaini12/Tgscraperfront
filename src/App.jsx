@@ -9,7 +9,7 @@ function App() {
   const [originalMessages, setOriginalMessages] = useState([]);
   const [suggestedTags, setSuggestedTags] = useState(['India', 'Government', 'Database']);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5000; // Adjust this based on your needs
+  const itemsPerPage = 1000; // Adjust this based on your needs
   
   useEffect(() => {
     axios.get('https://tgscraper.onrender.com/msg')
