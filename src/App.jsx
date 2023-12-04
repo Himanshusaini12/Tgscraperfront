@@ -10,7 +10,7 @@ function App() {
   const [suggestedTags, setSuggestedTags] = useState(['India', 'Government', 'Database']);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5000; // Adjust this based on your needs
-
+  
   useEffect(() => {
     axios.get('https://tgscraper.onrender.com/msg')
       .then(response => {
@@ -31,7 +31,7 @@ function App() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const messagesSlice = messagesToDisplay.slice(startIndex, endIndex);
-
+  const totalMessages = messagesToDisplay.length;
   return (
     <div className="app-container">
       <div className="search-container">
@@ -41,6 +41,7 @@ function App() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        
         <div className="suggested-tags">
           {suggestedTags.map((tag, index) => (
             <span key={index} className="tag" onClick={() => handleTagClick(tag)}>
@@ -51,7 +52,9 @@ function App() {
       </div>
 
       <div className="messages-container">
-        <h2>Telegram Messages</h2>
+        <h2>Telegram Messages</h2> <div className="message-count">
+        <p>Total Messages: {totalMessages}</p>
+      </div>
         <ul className="message-list">
           {messagesSlice.map(message => (
             <li key={message._id} className='message-card'>

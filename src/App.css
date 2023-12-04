@@ -45,7 +45,11 @@ input[type="text"] {
 h2 {
   color: #333;
 }
-
+.message-count {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
 .message-list {
   list-style: none;
   padding: 0;
@@ -57,7 +61,7 @@ h2 {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  min-width: 50%;
+  min-width: 50%; 
 }
 
 /* Responsive styles */
@@ -87,7 +91,7 @@ h2 {
   padding: 5px 10px;
   margin-right: 5px;
   margin-bottom: 5px;
-  margin: 1px;
+ 
   cursor: pointer;
   transition: background-color 0.2s;
 }
