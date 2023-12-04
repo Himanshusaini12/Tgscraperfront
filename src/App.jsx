@@ -9,18 +9,28 @@ function App() {
   const [originalMessages, setOriginalMessages] = useState([]);
   const [suggestedTags, setSuggestedTags] = useState(['India', 'Government', 'Database']);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 1000; // Adjust this based on your needs
-  
+  const [loading, setLoading] = useState(false);
+  const itemsPerPage = 1000;
+
   useEffect(() => {
-    axios.get('https://tgscraper.onrender.com/msg')
-      .then(response => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('https://tgscraper.onrender.com/msg');
         setOriginalMessages(response.data);
-        const filteredMessages = originalMessages.filter(message =>
+
+        const filteredMessages = response.data.filter(message =>
           message.content.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setMessages(filteredMessages);
-      })
-      .catch(error => console.error('Error fetching data:', error));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, [searchTerm]);
 
   const handleTagClick = (tag) => {
@@ -32,6 +42,7 @@ function App() {
   const endIndex = startIndex + itemsPerPage;
   const messagesSlice = messagesToDisplay.slice(startIndex, endIndex);
   const totalMessages = messagesToDisplay.length;
+
   return (
     <div className="app-container">
       <div className="search-container">
@@ -41,7 +52,7 @@ function App() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        
+
         <div className="suggested-tags">
           {suggestedTags.map((tag, index) => (
             <span key={index} className="tag" onClick={() => handleTagClick(tag)}>
@@ -52,24 +63,37 @@ function App() {
       </div>
 
       <div className="messages-container">
-        <h2>Telegram Messages</h2> <div className="message-count">
-        <p>Total Messages: {totalMessages}</p>
-      </div>
-        <ul className="message-list">
-          {messagesSlice.map(message => (
-            <li key={message._id} className='message-card'>
-              {message.content.replace(/{|}/g, '').replace(/🔹 t.me\/breachdetector 🔹/g, '').replace(/['"]+/g, '').replace(/,/g, "    ||       ").trim()}
-            </li>
-          ))}
-        </ul>
-        {messagesToDisplay.length > itemsPerPage && (
-          <div className="pagination">
-            {Array.from({ length: Math.ceil(messagesToDisplay.length / itemsPerPage) }, (_, index) => (
-              <button key={index + 1} onClick={() => setCurrentPage(index + 1)}>
-                {index + 1}
-              </button>
-            ))}
-          </div>
+        <h2>Telegram Messages</h2>
+        <div className="message-count">
+          <p>Total Messages: {totalMessages}</p>
+        </div>
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <ul className="message-list">
+              {messagesSlice.map((message) => (
+                <li key={message._id} className="message-card">
+                  {message.content
+                    .replace(/{|}/g, '')
+                    .replace(/🔹 t.me\/breachdetector 🔹/g, '')
+                    .replace(/['"]+/g, '')
+                    .replace(/,/g, '    ||       ')
+                    .trim()}
+                </li>
+              ))}
+            </ul>
+            {messagesToDisplay.length > itemsPerPage && (
+              <div className="pagination">
+                {Array.from({ length: Math.ceil(messagesToDisplay.length / itemsPerPage) }, (_, index) => (
+                  <button key={index + 1} onClick={() => setCurrentPage(index + 1)}>
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
