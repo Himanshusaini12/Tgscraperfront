@@ -9,7 +9,7 @@ function App() {
   const [originalMessages, setOriginalMessages] = useState([]);
   const [suggestedTags, setSuggestedTags] = useState(['India', 'Government', 'Database']);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 1000; // Adjust this based on your needs
+  const itemsPerPage = 5000; // Adjust this based on your needs
 
   useEffect(() => {
     axios.get('https://tgscraper.onrender.com/msg')
@@ -61,13 +61,11 @@ function App() {
         </ul>
         {messagesToDisplay.length > itemsPerPage && (
           <div className="pagination">
-            {/* First page button */}
-            <button onClick={() => setCurrentPage(1)}>1</button>
-
-            {/* Last page button */}
-            {totalPages > 1 && (
-              <button onClick={() => setCurrentPage(totalPages)}>{totalPages}</button>
-            )}
+            {Array.from({ length: Math.ceil(messagesToDisplay.length / itemsPerPage) }, (_, index) => (
+              <button key={index + 1} onClick={() => setCurrentPage(index + 1)}>
+                {index + 1}
+              </button>
+            ))}
           </div>
         )}
       </div>
