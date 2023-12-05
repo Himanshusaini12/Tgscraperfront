@@ -6,20 +6,50 @@ function App() {
   const [count, setCount] = useState(0);
   const [messages, setMessages] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const [originalMessages, setOriginalMessages] = useState([]);
   const [suggestedTags, setSuggestedTags] = useState(['India', 'Government', 'Database']);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [isBottom, setIsBottom] = useState(false);
   const itemsPerPage = 1000;
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (isBottom) {
+          setLoading(true);
+          const response = await axios.get(`http://localhost:3000/msg?page=${currentPage}`);
+          setOriginalMessages((prevMessages) => [...prevMessages, ...response.data]);
+  
+          const filteredMessages = response.data.filter((message) =>
+            message.content.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+          setMessages(filteredMessages);
+  
+          setCurrentPage((prevPage) => prevPage + 1); // Increment the page for the next request
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, [ currentPage, isBottom]);
+  
+  const handleTagClick = (tag) => {
+    // Update the searchTerm when a tag is clicked
+    setSearchTerm(tag);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('https://tgscraper.onrender.com/msg');
-        setOriginalMessages(response.data);
+        const response = await axios.get(`http://localhost:3000/msg?page=${currentPage}`);
+        setOriginalMessages((prevMessages) => [...prevMessages, ...response.data]);
 
-        const filteredMessages = response.data.filter(message =>
+        const filteredMessages = response.data.filter((message) =>
           message.content.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setMessages(filteredMessages);
@@ -31,13 +61,24 @@ function App() {
     };
 
     fetchData();
+  }, [ currentPage, isBottom]);
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      if(searchTerm.length > 2) { // only search after 3+ chars  
+        const response = await axios.get(`http://localhost:3000/search?query=${searchTerm}`);
+        console.log(response.data)
+        setSearchResults(response.data);
+
+       
+      } 
+    };
+
+    fetchResults();
+  
   }, [searchTerm]);
 
-  const handleTagClick = (tag) => {
-    setSearchTerm(tag);
-  };
-
-  const messagesToDisplay = searchTerm !== '' ? messages : originalMessages;
+  const messagesToDisplay = searchTerm !== '' ? searchResults : originalMessages;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const messagesSlice = messagesToDisplay.slice(startIndex, endIndex);
@@ -46,12 +87,11 @@ function App() {
   return (
     <div className="app-container">
       <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search for content..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+      <input
+        type="text" 
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}  
+      />
 
         <div className="suggested-tags">
           {suggestedTags.map((tag, index) => (
