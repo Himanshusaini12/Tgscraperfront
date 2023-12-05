@@ -104,9 +104,7 @@ function App() {
 
       <div className="messages-container">
         <h2>Telegram Messages</h2>
-        <div className="message-count">
-          <p>Total Messages: {totalMessages}</p>
-        </div>
+        
 
         {loading ? (
           <p>Loading...</p>
