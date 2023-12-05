@@ -66,7 +66,7 @@ function App() {
   useEffect(() => {
     const fetchResults = async () => {
       if(searchTerm.length > 2) { // only search after 3+ chars  
-        const response = await axios.get(`http://localhost:3000/search?query=${searchTerm}`);
+        const response = await axios.get(`https://tgscraper.onrender.com/search?query=${searchTerm}`);
         console.log(response.data)
         setSearchResults(response.data);
 
