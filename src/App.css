@@ -1,102 +1,69 @@
-/* Reset some default styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Body styles */
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f0f0f0;
-  color: #333; /* Set text color */
-}
-
-/* App container styles */
-.app-container {
-  max-width: 10000px;
-  
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  
-}
-
-/* Search container styles */
-.search-container {
-  margin-bottom: 20px;
-}
-
-input[type="text"] {
-  width: 80%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-left: 10%;
-}
-
-/* Messages container styles */
-.messages-container {
-  background-color: #f9f9f9;
-  padding: 20px;
-}
-
-h2 {
-  color: #333;
-}
-.message-count {
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: bold;
-}
-.message-list {
-  list-style: none;
-  padding: 0;
-}
-
-.message-card {
-  background-color: #fff;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  min-width: 50%; 
-}
-
-/* Responsive styles */
-@media only screen and (max-width: 600px) {
-  .app-container {
-    padding: 10px;
-  }
-
-  input[type="text"] {
-    font-size: 14px;
-  }
-
-  .message-card {
-    padding: 8px;
-  }
-}
-.suggested-tags {
+  margin: 0;
   display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;  
-  margin-left: 10%;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
 }
 
-.tag {
-  background-color: #eee;
-  border-radius: 3px;
-  padding: 5px 10px;
-  margin-right: 5px;
-  margin-bottom: 5px;
- 
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  margin: 2px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
 }
 
-.tag:hover {
-  background-color: #ddd;  
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
 }
-
