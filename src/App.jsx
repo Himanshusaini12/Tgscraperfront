@@ -46,7 +46,7 @@ function App() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:3000/msg?page=${currentPage}`);
+        const response = await axios.get(`https://tgscraper.onrender.com/msg?page=${currentPage}`);
         setOriginalMessages((prevMessages) => [...prevMessages, ...response.data]);
 
         const filteredMessages = response.data.filter((message) =>
